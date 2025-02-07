@@ -1,7 +1,7 @@
 (function ($) {
     "use strict"
 
-    var table = $('#products_index_table').DataTable({
+    var table = $('#user_histories_index_table').DataTable({
         dom: 'lBfrtip',
         language: {
             paginate: {
@@ -19,7 +19,7 @@
             infoFiltered: "- Filtrado de _MAX_ registros.",
             sInfoEmpty: "Sin registros para mostrar",
             info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-            emptyTable: "No se encontraron registros de productos para mostrar.",
+            emptyTable: "No se encontraron registros de usuarios para mostrar.",
             zeroRecords:
                 "No se encontraron registros que coincidan con la búsqueda.",
         },
@@ -35,10 +35,5 @@
         order: [
             [1, 'asc'] // A-Z
         ],
-    });
-
-    // Reinicializar Venobox al dibujar la tabla
-    table.on('draw.dt', function () {
-        $('.product_image').venobox();
     });
 })(jQuery);

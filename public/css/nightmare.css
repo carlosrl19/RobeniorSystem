@@ -7,7 +7,11 @@
 }
 
 .clamp_text_sm_2 {
-    font-size: clamp(0.3rem, 3vw, 0.55rem);
+    font-size: clamp(0.65rem, 3vw, 0.7rem);
+}
+
+.clamp_text_sm_3 {
+    font-size: clamp(0.75rem, 3vw, 0.8rem);
 }
 
 .clamp_text_md {

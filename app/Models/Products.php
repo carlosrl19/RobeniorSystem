@@ -9,16 +9,18 @@ class Products extends Model
 {
     protected $fillable = [
         'product_code',
-        'product_nomenclature', //
+        'product_nomenclature',
         'product_name',
         'product_brand',
         'product_model',
         'product_status',
         'product_stock',
-        'product_price', //
+        'product_price',
         'product_description',
-        'product_status_description', //
+        'product_status_description',
         'product_image',
-        'product_reviewed_by'
-    ];  
+        'product_reviewed_by',
+        'created_at',
+        'updated_at'
+    ];
 }

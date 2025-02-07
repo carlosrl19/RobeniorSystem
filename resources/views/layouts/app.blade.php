@@ -12,9 +12,6 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <!-- Styles -->
     @livewireStyles
 
@@ -92,18 +89,24 @@
                 <div class="navbar">
                     <div class="container-xl">
                         <ul class="navbar-nav">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="./">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                            <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                                        </svg>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('products.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <x-heroicon-o-inbox-stack />
                                     </span>
-                                    <span class="nav-link-title">
+                                    <span class="nav-link-title clamp_text_sm_3">
                                         Inventario
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users_history.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <x-heroicon-o-calendar-days />
+                                    </span>
+                                    <span class="nav-link-title clamp_text_sm_3">
+                                        Historial cambios
                                     </span>
                                 </a>
                             </li>
@@ -129,10 +132,10 @@
                         </div>
                         <!-- Page title actions -->
                         <div class="col-auto ms-auto d-print-none">
+                            @yield('create')
                             <div class="btn-list">
                                 <span class="d-none d-sm-inline">
                                     @yield('messages')
-                                    @yield('create')
                                 </span>
                             </div>
                         </div>

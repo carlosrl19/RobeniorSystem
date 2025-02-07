@@ -3,8 +3,7 @@
 @section('head')
 
 <!-- Datatable CSS -->
-<link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
-<link href="{{ asset('vendor/datatables/css/buttons.dataTables.min.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/datatables/datatables.min.css') }}" rel="stylesheet">
 
 <!-- Venobox -->
 <link href="{{ asset('vendor/venobox/venobox.min.css') }}" rel="stylesheet">
@@ -29,16 +28,16 @@ Inventario
 
 <a href="#" class="btn bt-sm btn-primary clamp_text" data-bs-toggle="modal" data-bs-target="#product_create">
     <x-heroicon-o-plus class="w-3 h-3 text-white" />
-    &nbsp;Crear producto
+    &nbsp;Crear
 </a>
 @endsection
 
 @section('content')
-<div class="card" style="width: 100%; overflow: visible;">
+<div class="card" style="width: 100%;">
     <div class="card-body">
         <table id="products_index_table" class="display table table-bordered">
             <thead>
-                <tr class="text-center text-white">
+                <tr style="background-color: #224488;">
                     <th>Código</th>
                     <th>Presentación</th>
                     <th>Nombre</th>
@@ -49,11 +48,12 @@ Inventario
                     <th>Estado</th>
                     <th>Precio</th>
                     <th>Tecnico</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="font-size: clamp(0.6rem, 3vw, 0.7rem) !important">
                 @foreach ($products as $product)
-                <tr class="text-center">
+                <tr>
                     <td>#{{ $product->product_code }}</td>
                     <td>
                         @if ($product->product_image)
@@ -96,10 +96,14 @@ Inventario
                     </td>
                     <td>L. {{ number_format($product->product_price,2) }}</td>
                     <td>{{ $product->product_reviewed_by }}</td>
+                    <td>
+                        <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#delete_product{{ $product->id }}"><x-heroicon-o-trash class="w-3 h-3" /> Eliminar</a>
+                    </td>
                 </tr>
 
                 <!-- Includes -->
                 @include('modules.products._update')
+                @include('modules.products._delete')
 
                 @endforeach
             </tbody>
@@ -120,7 +124,7 @@ Inventario
 <script src="{{ asset('customjs/carousels/carousel_products_update.js') }}"></script>
 
 <!-- Datatable -->
-<script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('customjs/datatables/dt_products.js') }}"></script>
 
 <!-- Venobox -->

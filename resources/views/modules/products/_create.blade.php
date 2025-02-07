@@ -12,8 +12,44 @@
                     <input type="hidden" name="product_code" id="product_code" value="0"> <!-- Controller make this work -->
                     <input type="hidden" name="product_reviewed_by" id="product_reviewed_by" value="{{ Auth::user()->name }}">
 
+                    <!-- Carousel sm displays -->
+                    <div class="row d-sm-block d-md-block d-lg-none d-xl-none">
+                        <div class="col-sm-12 col-md-12 mb-3">
+                            <div id="carousel-controls" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner" id="carousel-sm-product-creation-images">
+                                    <div class="carousel-item active">
+                                        <img class="d-block" alt="" src="{{ asset('static/no_image_available.png') }}" style="margin: auto; min-height: 100px; max-height: 100px">
+                                    </div>
+                                </div>
+
+                                <a class="carousel-control-prev" href="#carousel-controls" role="button" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel-controls" role="button" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Siguiente</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-lg-6 col-md-12 col-sm-12 ">
+                            <div class="row mb-3 align-items-end">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <input type="file" multiple accept="image/*,.jpeg,.png,.jpg,.gif,.heic,.jfif" capture="camera"
+                                        class="clamp_text form-control @error('product_image') is-invalid @enderror"
+                                        id="product_image" name="product_image[]"
+                                        onchange="carouselProductCreateViewer(event); carouselSMProductCreateViewer(event);">
+                                    @error('product_image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="row mb-3 align-items-end">
                                 <div class="col">
                                     <select class="clamp_text form-select tom-select" id="product_status" name="product_status">
@@ -29,7 +65,7 @@
                             <div class="row mb-3 align-items-end">
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="text" maxlength="55" name="product_name" oninput="this.value = this.value.toUpperCase().replace(/[^A-ZÑ\s]/g, '')" value="{{ old('product_name') }}" id="product_name" class="clamp_text form-control @error('product_name') is-invalid @enderror" />
+                                        <input type="text" maxlength="55" name="product_name" oninput="this.value = this.value.toUpperCase().replace(/[^A-ZÑ0-9\s]/g, '')" value="{{ old('product_name') }}" id="product_name" class="clamp_text form-control @error('product_name') is-invalid @enderror" />
                                         @error('product_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -41,9 +77,9 @@
                             </div>
 
                             <div class="row mb-3 align-items-end">
-                                <div class="col">
+                                <div class="col-lg-6 col-md-12 col-sm-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
                                     <div class="form-floating">
-                                        <input type="text" maxlength="20" name="product_brand" oninput="this.value = this.value.toUpperCase().replace(/[^A-ZÑ\s]/g, '')" value="{{ old('product_brand') }}" id="product_brand" class="clamp_text form-control @error('product_brand') is-invalid @enderror" />
+                                        <input type="text" maxlength="20" name="product_brand" oninput="this.value = this.value.toUpperCase().replace(/[^A-ZÑ0-9\s]/g, '')" value="{{ old('product_brand') }}" id="product_brand" class="clamp_text form-control @error('product_brand') is-invalid @enderror" />
                                         @error('product_brand')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -52,15 +88,15 @@
                                         <label for="product_brand">Marca producto <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-lg-6 col-md-12 col-sm-12">
                                     <div class="form-floating">
-                                        <input type="text" maxlength="20" name="product_model" oninput="this.value = this.value.toUpperCase().replace(/[^A-ZÑ\s]/g, '')" value="{{ old('product_model') }}" id="product_model" class="clamp_text form-control @error('product_model') is-invalid @enderror" />
+                                        <input type="text" maxlength="20" name="product_model" oninput="this.value = this.value.toUpperCase().replace(/[^A-ZÑ0-9\s]/g, '')" value="{{ old('product_model') }}" id="product_model" class="clamp_text form-control @error('product_model') is-invalid @enderror" />
                                         @error('product_model')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
-                                        <label for="product_name">Modelo producto <span class="text-danger">*</span></label>
+                                        <label for="product_name">Modelo producto</label>
                                     </div>
                                 </div>
                             </div>
@@ -95,23 +131,22 @@
                             </div>
 
                             <div class="row mb-3 align-items-end">
-                                <div class="col">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-floating">
-                                        <textarea oninput="this.value = this.value.toUpperCase()" class="clamp_text form-control @error('product_description') is-invalid @enderror" maxlength="600"
-                                            name="product_description" id="product_description" style="resize: none; height: 100px;">{{ old('product_description') }}</textarea>
-                                        @error('product_description')
+                                        <input type="text" maxlength="20" name="product_nomenclature" oninput="this.value = this.value.toUpperCase().replace(/[^A-ZÑ0-9\s-]/g, '')" value="{{ old('product_nomenclature') }}" id="product_nomenclature" class="clamp_text form-control @error('product_nomenclature') is-invalid @enderror" />
+                                        @error('product_nomenclature')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
-                                        <label for="product_description">Descripción del producto</label>
+                                        <label for="product_nomenclature">Nomenclatura producto <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Carrusel -->
-                        <div class="col-6 mb-3">
+                        <div class="col-lg-6 mb-3 d-none d-lg-block">
                             <div class="card" style="padding: 5px; min-height: 100%; max-height: 100%;">
                                 <div class="card-header text-muted">
                                     Presentación del producto
@@ -154,7 +189,19 @@
                         </div>
 
                         <div class="row mb-3 align-items-end">
-                            <div class="col">
+                            <div class="col-lg-6 col-md-12 col-sm-12 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
+                                <div class="form-floating">
+                                    <textarea oninput="this.value = this.value.toUpperCase()" class="clamp_text form-control @error('product_description') is-invalid @enderror" maxlength="600"
+                                        name="product_description" id="product_description" style="resize: none; height: 100px;">{{ old('product_description') }}</textarea>
+                                    @error('product_description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    <label for="product_description">Descripción del producto</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12">
                                 <div class="form-floating">
                                     <textarea oninput="this.value = this.value.toUpperCase()" class="clamp_text form-control @error('product_status_description') is-invalid @enderror" maxlength="600"
                                         name="product_status_description" id="product_status_description" style="resize: none; height: 100px;">{{ old('product_status_description') }}</textarea>
@@ -164,35 +211,6 @@
                                     </span>
                                     @enderror
                                     <label for="product_status_description">Descripción del estado del producto <span class="text-danger">*</span></label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3 align-items-end">
-                            <div class="col-5">
-                                <div class="form-floating">
-                                    <input type="text" maxlength="5" name="product_nomenclature" oninput="this.value = this.value.toUpperCase().replace(/[^A-ZÑ\s]/g, '')" value="{{ old('product_nomenclature') }}" id="product_nomenclature" class="clamp_text form-control @error('product_nomenclature') is-invalid @enderror" />
-                                    @error('product_nomenclature')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                    <label for="product_nomenclature">Nomenclatura producto <span class="text-danger">*</span></label>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="form-floating">
-                                    <input multiple type="file" accept="image/*"
-                                        class="clamp_text form-control @error('product_image') is-invalid @enderror"
-                                        id="product_image" name="product_image[]"
-                                        onchange="carouselProductCreateViewer(event)">
-                                    @error('product_image')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                    <label for="product_image">Imágen(s) del producto <span class="text-danger">*</span></label>
                                 </div>
                             </div>
                         </div>
