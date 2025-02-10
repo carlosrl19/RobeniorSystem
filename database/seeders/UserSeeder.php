@@ -23,6 +23,11 @@ class UserSeeder extends Seeder
                 'email' => 'jafeth@robenior.com',
                 'password' => Hash::make('Depredador2'),
             ],
+            [
+                'name' => 'Mariela Guerrero',
+                'email' => 'marielita@robenior.com',
+                'password' => Hash::make('G.Mariela25'),
+            ],
         ];
 
         // Crear los usuarios en la base de datos

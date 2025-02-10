@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\InventoryExport;
 use App\Http\Requests\Products\StoreRequest;
 use App\Http\Requests\Products\UpdateRequest;
+use App\Models\Category;
 use App\Models\Products;
 use App\Models\UserHistory;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        $products = Products::all();
-        return view("modules.products.index", compact("products"));
+        $categories = Category::get();
+        return view("modules.products.index", compact("categories"));
     }
 
     public function store(StoreRequest $request)
@@ -37,7 +38,7 @@ class ProductsController extends Controller
                 $images = $request->file('product_image');
                 foreach ($images as $image) {
                     $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path('uploads/products'), $imageName);
+                    $image->move(public_path('../public_html/uploads/products'), $imageName);
                     $imageNames[] = $imageName;
                 }
             }
@@ -53,6 +54,7 @@ class ProductsController extends Controller
                 'product_brand' => $request->input('product_brand'),
                 'product_model' => $request->input('product_model'),
                 'product_status' => $request->input('product_status'),
+                'category_id' => $request->input('category_id'),
                 'product_stock' => $request->input('product_stock'),
                 'product_price' => $request->input('product_price'),
                 'product_description' => $request->input('product_description'),
@@ -67,7 +69,7 @@ class ProductsController extends Controller
             UserHistory::create([
                 'user_name' => Auth::user()->name,
                 'history_change_type' => 1,
-                'history_change' => 'EL USUARIO ' . Auth::user()->name . ' CREO UN NUEVO PRODUCTO LLAMADO' . $request->input('product_name') . ' EN EL SISTEMA.',
+                'history_change' => 'EL USUARIO ' . Auth::user()->name . ' CREO UN NUEVO PRODUCTO LLAMADO ' . $request->input('product_name') . ' EN EL SISTEMA.',
                 'created_at' => $todayDate,
                 'updated_at' => $todayDate,
             ]);
@@ -95,6 +97,7 @@ class ProductsController extends Controller
             $product_old_brand = $product->product_brand;
             $product_old_model = $product->product_model;
             $product_old_status = $product->product_status;
+            $product_old_category = $product->category_id;
             $product_old_stock = $product->product_stock;
             $product_old_price = $product->product_price;
             $product_old_description = $product->product_description;
@@ -113,7 +116,7 @@ class ProductsController extends Controller
                 foreach ($request->file('product_image') as $image) {
                     if ($image->isValid()) {
                         $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-                        $image->move(public_path('uploads/products'), $imageName);
+                        $image->move(public_path('../public_html/uploads/products'), $imageName);
                         $imageNames[] = $imageName;
                     }
                 }
@@ -126,6 +129,7 @@ class ProductsController extends Controller
                 'product_brand' => $request->input('product_brand'),
                 'product_model' => $request->input('product_model'),
                 'product_status' => $request->input('product_status'),
+                'category_id' => $request->input('category_id'),
                 'product_stock' => $request->input('product_stock'),
                 'product_price' => $request->input('product_price'),
                 'product_description' => $request->input('product_description'),
@@ -197,6 +201,16 @@ class ProductsController extends Controller
                 ]);
             }
 
+            if ($product_old_category != $request->input('category_id')) {
+                UserHistory::create([
+                    'user_name' => $userName,
+                    'history_change_type' => 2,
+                    'history_change' => "EL USUARIO {$userName} CAMBIÓ LA CATEGORIA DEL PRODUCTO " . $product_old_name . ".",
+                    'created_at' => $todayDate,
+                    'updated_at' => $todayDate,
+                ]);
+            }
+
             if ($product_old_stock != $request->input('product_stock')) {
                 UserHistory::create([
                     'user_name' => $userName,
@@ -255,7 +269,6 @@ class ProductsController extends Controller
             return redirect()->back()->withErrors(['error' => 'Error al actualizar el registro: ' . $e->getMessage()])->withInput();
         }
     }
-
     public function destroy($id)
     {
         try {
@@ -281,5 +294,13 @@ class ProductsController extends Controller
             }
             return redirect()->route('products.index')->with('error', 'Acción no permitida.');
         }
+    }
+
+    public function inventory_report()
+    {
+        $todayDate = Carbon::now()->setTimezone('America/Costa_Rica')->locale('es')->translatedFormat('d F Y'); // Mes con nombre completo en español
+        $todayDate = str_replace(Carbon::now()->translatedFormat('F'), strtoupper(Carbon::now()->translatedFormat('F')), $todayDate); // Uppercase para el nombre del mes
+
+        return Excel::download(new InventoryExport, 'REPORTE INVENTARIO ' . $todayDate . ' - EXCEL.xlsx');
     }
 }

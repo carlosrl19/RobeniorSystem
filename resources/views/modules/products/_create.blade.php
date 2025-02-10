@@ -60,6 +60,14 @@
                                         <option value="3">PRODUCTO USADO</option>
                                     </select>
                                 </div>
+                                <div class="col">
+                                    <select class="clamp_text form-select tom-select" id="category_id" name="category_id">
+                                        <option value="" selected disabled>Seleccione la categoría del producto</option>
+                                        @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>                                        
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="row mb-3 align-items-end">

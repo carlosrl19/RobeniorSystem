@@ -25,6 +25,7 @@ class UpdateRequest extends FormRequest
             'product_brand' => 'required|string|max:20|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9 ,.\s]+$/|',
             'product_model' => 'nullable|string|max:20|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9 ,.\s]+$/|',
             'product_status' => 'required|integer|in:0,1,2,3',
+            'category_id' => 'required|numeric|exists:categories,id',
             'product_stock' => 'required|integer',
             'product_price' => 'required|numeric|between:0,99999999.99',
             'product_description' => 'nullable|string|max:600',
@@ -65,6 +66,10 @@ class UpdateRequest extends FormRequest
             'product_status.required' => 'El estado es obligatorio.',
             'product_status.integer' => 'El estado debe ser un número entero.',
             'product_status.in' => 'El estado debe estar entre 0 y 3.',
+
+            'category_id.required' => 'La categoría es obligatoria.',
+            'category_id.numeric' => 'La categoría seleccionada es inválida (dev.request).',
+            'category_id.exists' => 'La categoría seleccionada no existe.',
 
             'product_stock.required' => 'El stock es obligatorio.',
             'product_stock.integer' => 'El stock debe ser un número entero.',

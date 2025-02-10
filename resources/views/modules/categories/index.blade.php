@@ -4,18 +4,14 @@
 
 <!-- Datatable CSS -->
 <link href="{{ asset('vendor/datatables/datatables.min.css') }}" rel="stylesheet">
-
-<!-- Venobox -->
-<link href="{{ asset('vendor/venobox/venobox.min.css') }}" rel="stylesheet">
-
 @endsection
 
 @section('pretitle')
-Listado de productos
+Listado de categorías
 @endsection
 
 @section('title')
-Inventario
+Categorías
 @endsection
 
 @section('create')
@@ -26,11 +22,6 @@ Inventario
 </button>
 @endif
 
-<a href="{{ route('products.inventory_report') }}" class="btn bt-sm btn-success clamp_text">
-    <x-heroicon-o-document-text class="w-3 h-3 text-white" />
-    &nbsp;Exportar inventario
-</a>
-
 <a href="#" class="btn bt-sm btn-primary clamp_text" data-bs-toggle="modal" data-bs-target="#product_create">
     <x-heroicon-o-plus class="w-3 h-3 text-white" />
     &nbsp;Crear
@@ -38,13 +29,39 @@ Inventario
 @endsection
 
 @section('content')
+<div class="card" style="width: 100%">
+    <div class="card-body">
+        <table id="categories_table" class="display table table-bordered">
+            <thead>
+                <tr style="background-color: #224488;">
+                    <th>Nombre</th>
+                    <th>Descripción categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody style="font-size: clamp(0.6rem, 3vw, 0.7rem) !important">
+                @foreach ($categories as $category)
+                <tr>
+                    <td>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#category_update{{ $category->id }}">{{ $category->category_name }}</a>
+                    </td>
+                    <td>{{ $category->category_description }}</td>
+                    <td>
+                        <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#delete_category{{ $category->id }}"><x-heroicon-o-trash class="w-3 h-3" /> Eliminar</a>
+                    </td>
+                </tr>
 
-<div class="container">
-    <!-- Include tabs/tables -->
-    @include('modules.products.table_tabs')
+                <!-- Includes -->
+                @include('modules.categories._update')
+                @include('modules.categories._delete')
+
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 
-@include('modules.products._create')
+@include('modules.categories._create')
 @include('layouts._error_modal')
 @endsection
 
@@ -53,18 +70,9 @@ Inventario
 <!-- JQuery -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 
-<script src="{{ asset('customjs/carousels/carousel_products_create.js') }}"></script>
-<script src="{{ asset('customjs/carousels/carousel_products_update.js') }}"></script>
-
 <!-- Datatable -->
 <script src="{{ asset('vendor/datatables/datatables.min.js') }}"></script>
-<script src="{{ asset('customjs/datatables/dt_products.js') }}"></script>
-<script src="{{ asset('customjs/datatables/dt_tools.js') }}"></script>
-<script src="{{ asset('customjs/datatables/dt_fornitures.js') }}"></script>
-
-<!-- Venobox -->
-<script src="{{ asset('vendor/venobox/venobox.min.js')}}"></script>
-<script src="{{ asset('customjs/venobox/vb_products.js')}}"></script>
+<script src="{{ asset('customjs/datatables/dt_categories.js') }}"></script>
 
 <!-- Toast closer -->
 <script src="{{ asset('customjs/scripts/toast_closer.js') }}"></script>

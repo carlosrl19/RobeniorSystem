@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('product_model', 20)->nullable();
             $table->integer('product_status'); // 0: Malo, 1: Nuevo, 2: Seminuevo, 3: Usado
 
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
+            
             $table->integer('product_stock');
             $table->decimal('product_price', 10, 2); // tabla
 

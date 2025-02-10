@@ -84,6 +84,7 @@
                 </div>
             </div>
         </header>
+        
         <header class="navbar-expand-md">
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div class="navbar">
@@ -96,6 +97,17 @@
                                     </span>
                                     <span class="nav-link-title clamp_text_sm_3">
                                         Inventario
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('categories.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <x-heroicon-o-bookmark-square />
+                                    </span>
+                                    <span class="nav-link-title clamp_text_sm_3">
+                                        Categorías inventario
                                     </span>
                                 </a>
                             </li>
