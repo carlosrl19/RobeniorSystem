@@ -59,19 +59,19 @@
                     <div class="d-none d-md-flex">
                         <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Activar modo oscuro"
                             data-bs-toggle="tooltip" data-bs-placement="bottom">
-                            <x-heroicon-o-moon class="w-4 h-4 text-gray-400 me-2" />
+                            <x-heroicon-o-moon class="w-4 h-4 text-gray-400 me-4" />
                         </a>
                         <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Activar modo claro"
                             data-bs-toggle="tooltip" data-bs-placement="bottom">
-                            <x-heroicon-o-sun class="w-4 h-4 text-gray-400 me-2" />
+                            <x-heroicon-o-sun class="w-4 h-4 text-gray-400 me-3" />
                         </a>
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                            <span class="avatar avatar-sm" style="background-image: url(images/users/672a7465799bf.jpg)"></span>
+                            <span class="avatar avatar-sm" style="background-color: #ffffff; background-image: url(images/uploads/users/{{ Auth::user()->profile_photo }})"></span>
                             <div class="d-none d-xl-block ps-2">
                                 <div>{{ Auth::user()->name }}</div>
-                                <div class="mt-1 small text-muted">Usuario actual</div>
+                                <div class="mt-1 small text-muted fst-italic">{{ Auth::user()->roles->pluck('name') }}</div>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -84,47 +84,10 @@
                 </div>
             </div>
         </header>
-        
+
         <header class="navbar-expand-md">
             <div class="collapse navbar-collapse" id="navbar-menu">
-                <div class="navbar">
-                    <div class="container-xl">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('products.index') }}">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-heroicon-o-inbox-stack />
-                                    </span>
-                                    <span class="nav-link-title clamp_text_sm_3">
-                                        Inventario
-                                    </span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('categories.index') }}">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-heroicon-o-bookmark-square />
-                                    </span>
-                                    <span class="nav-link-title clamp_text_sm_3">
-                                        Categorías inventario
-                                    </span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users_history.index') }}">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-heroicon-o-calendar-days />
-                                    </span>
-                                    <span class="nav-link-title clamp_text_sm_3">
-                                        Historial cambios
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                @include('layouts._navbar')
             </div>
         </header>
 

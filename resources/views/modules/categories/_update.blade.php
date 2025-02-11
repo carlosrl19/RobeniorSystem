@@ -47,7 +47,8 @@
                         <div class="row align-items-end">
                             <div class="col">
                                 <button type="button" class="btn btn-sm btn-dark me-auto clamp_text_md" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-sm btn-teal clamp_text_md">Guardar</button>
+                                <button type="submit" class="btn btn-sm btn-yellow clamp_text_md">Guardar</button>
+                                <button type="button" class="btn btn-sm btn-danger me-auto clamp_text_md" style="float: right" data-bs-toggle="modal" data-bs-target="#delete_category{{ $category->id }}">Eliminar</button>
                             </div>
                         </div>
                     </div>

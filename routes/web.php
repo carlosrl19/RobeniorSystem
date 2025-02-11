@@ -24,4 +24,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     // User history routes
     Route::resource('users_history', 'App\Http\Controllers\UserHistoryController')->names('users_history');
+
+    // Users
+    Route::resource('users', 'App\Http\Controllers\UserController')->names('users');
+
+    // Roles
+    Route::resource('roles', 'App\Http\Controllers\RolesController')->names('roles');
+
+    // Permissions
+    Route::resource('permissions', 'App\Http\Controllers\PermissionsController')->names('permissions');
 });

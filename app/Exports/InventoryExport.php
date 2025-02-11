@@ -17,7 +17,8 @@ class InventoryExport implements FromView, WithProperties, WithEvents, WithTitle
     public function view(): View
     {
         // Obtener inventario
-        $inventories = Products::get();
+        $inventories = Products::orderBy('product_name')->get();
+
         $inventory_total_value = Products::sum('product_price');
 
         return view('modules.products.exports._excel_report', [

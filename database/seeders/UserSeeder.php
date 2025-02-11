@@ -16,17 +16,14 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Carlos Rodriguez',
                 'email' => 'admin@dev.com',
+                'profile_photo' => '',
                 'password' => Hash::make('Nightmare1998#@'),
             ],
             [
                 'name' => 'Jafeth Guifarro',
                 'email' => 'jafeth@robenior.com',
+                'profile_photo' => '',
                 'password' => Hash::make('Depredador2'),
-            ],
-            [
-                'name' => 'Mariela Guerrero',
-                'email' => 'marielita@robenior.com',
-                'password' => Hash::make('G.Mariela25'),
             ],
         ];
 
