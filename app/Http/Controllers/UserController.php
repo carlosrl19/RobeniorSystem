@@ -30,7 +30,7 @@ class UserController extends Controller
             if ($request->hasFile('profile_photo')) {
                 $image = $request->file('profile_photo');
                 $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images/uploads/users'), $imageName);
+                $image->move(public_path('../public_html/uploads/users'), $imageName);
             }
 
             // Guardar el nombre de la imagen directamente
@@ -62,7 +62,7 @@ class UserController extends Controller
             if ($request->hasFile('profile_photo')) {
                 // Si hay una imagen anterior, eliminarla
                 if ($user->profile_photo) {
-                    $previousImagePath = public_path('images/uploads/users' . $user->profile_photo);
+                    $previousImagePath = public_path('../public_html/uploads/users' . $user->profile_photo);
                     if (file_exists($previousImagePath)) {
                         unlink($previousImagePath); // Eliminar la imagen anterior
                     }

@@ -14,7 +14,7 @@
                         <div class="col">
                             <!-- Visualizador de imagen -->
                             <div class="text-center">
-                                <img id="profilePhotoPreview" src="images/uploads/users/{{ $user->profile_photo }}" alt="Profile Photo" class="img-fluid rounded-circle mb-2" style="width: 150px; height: 150px; object-fit: cover;">
+                                <img id="profilePhotoPreview" src="uploads/users/{{ $user->profile_photo }}" alt="Profile Photo" class="img-fluid rounded-circle mb-2" style="width: 150px; height: 150px; object-fit: cover;">
                             </div>
                         </div>
                     </div>

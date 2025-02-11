@@ -55,8 +55,8 @@ Usuarios
                         @if ($user->profile_photo)
                         <div class="d-flex flex-wrap justify-content-center">
                             <div class="mx-2 my-1">
-                                <a class="profile_photo" data-gall="user_gallery" title="Foto perfil - {{ $user->name }}" data-fitview="true" href="images/uploads/users/{{ $user->profile_photo }}">
-                                    <img id="image-preview" style="border: 1px solid #e3e3e3; border-radius: 5px; padding: 5px;" src="images/uploads/users/{{ $user->profile_photo }}" alt="Profile photo" width="30" height="30">
+                                <a class="profile_photo" data-gall="user_gallery" title="Foto perfil - {{ $user->name }}" data-fitview="true" href="uploads/users/{{ $user->profile_photo }}">
+                                    <img id="image-preview" style="border: 1px solid #e3e3e3; border-radius: 5px; padding: 5px;" src="uploads/users/{{ $user->profile_photo }}" alt="Profile photo" width="30" height="30">
                                 </a>
                             </div>
                         </div>
